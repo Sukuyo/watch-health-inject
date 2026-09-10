@@ -1,0 +1,2 @@
+# watch-health-inject
+一些适应自己需求从而缓慢的用deepseek蹬出来的关于完全无法读取小米10pro手环睡眠数据的GadgetBridge的插件
