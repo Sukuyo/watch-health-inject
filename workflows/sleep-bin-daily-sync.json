@@ -1,0 +1,56 @@
+{
+    "id": "REPLACE-WITH-YOUR-WORKFLOW-UUID",
+    "name": "睡眠bin每日同步",
+    "description": "每天早上7点+手动触发：用shell把GB最新睡眠bin复制到tmp_bin/sleep_v6.bin，让插件读到最新睡眠（不经过AI、不消耗token）。导入后请把 <BAND_MAC> 替换为你自己的手环MAC。",
+    "nodes": [
+        {
+            "__type": "com.ai.assistance.operit.data.model.TriggerNode",
+            "id": "t_manual",
+            "name": "手动",
+            "position": {
+                "x": 280.0,
+                "y": -280.0
+            }
+        },
+        {
+            "__type": "com.ai.assistance.operit.data.model.ExecuteNode",
+            "id": "e_copy",
+            "name": "Action",
+            "position": {
+                "x": -280.0,
+                "y": -840.0
+            },
+            "actionType": "super_admin:shell",
+            "actionConfig": {
+                "command": {
+                    "__type": "com.ai.assistance.operit.data.model.ParameterValue.StaticValue",
+                    "value": "SRC_DIR='/storage/emulated/0/Android/data/nodomain.freeyourgadget.gadgetbridge/files/<BAND_MAC>/rawFetchOperations/2026/ACTIVITY/ACTIVITY_SLEEP/SUMMARY'; DST='/sdcard/Download/Operit/tmp_bin/sleep_v6.bin'; LATEST=$(ls -t \"$SRC_DIR\"/*_v6.bin 2>/dev/null | head -1); if [ -n \"$LATEST\" ]; then cp \"$LATEST\" \"$DST\" && echo \"OK: $(basename \"$LATEST\") -> $DST\"; else echo \"NO_BIN: 源目录暂无v6 bin\"; fi"
+                }
+            }
+        },
+        {
+            "__type": "com.ai.assistance.operit.data.model.TriggerNode",
+            "id": "t_sched7",
+            "name": "Trigger",
+            "triggerType": "schedule",
+            "triggerConfig": {
+                "schedule_type": "cron",
+                "enabled": "true",
+                "repeat": "true",
+                "cron_expression": "0 7 * * *"
+            }
+        }
+    ],
+    "connections": [
+        {
+            "id": "REPLACE-CONNECTION-ID-1",
+            "sourceNodeId": "t_manual",
+            "targetNodeId": "e_copy"
+        },
+        {
+            "id": "REPLACE-CONNECTION-ID-2",
+            "sourceNodeId": "t_sched7",
+            "targetNodeId": "e_copy"
+        }
+    ]
+}
