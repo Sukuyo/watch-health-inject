@@ -49,7 +49,7 @@
 
 ## 安装
 
-1. 下载 Release 中的 `watch_health_inject_newXX.toolpkg`
+1. 到 [Releases](https://github.com/Sukuyo/watch-health-inject/releases) 下载最新版 `watch_health_inject_v0.2.0.toolpkg`
 2. 在 Operit 中导入该包
 3. 在**工具箱设置**里配置 Gadgetbridge 导出的数据库路径（见下）
 4. 确保 Gadgetbridge 已连接手环、服务存活
@@ -202,7 +202,18 @@ fi
 | new12 | 生理期配置 + 流式读取修复（防栈溢出） | 历史 |
 | new13 | 备注功能 + debug.log 大小守卫 | 历史 |
 | new14 | 9 项勾选显示 | 历史 |
-| **new15** | **异步预同步：先 ACTIVITY_SYNC 再强制导出** | **当前** |
+| new15 | 异步预同步：先 ACTIVITY_SYNC 再强制导出 | 历史（睡眠解析有误） |
+| sleepfix ~ sleepfix4 | 睡眠解析修复迭代（测试版，未单独发布） | 历史 |
+| **v0.2.0** | **睡眠解析修复定稿 + 版本号规整**（详见下节） | **当前** |
+
+### v0.2.0 睡眠解析修复
+
+在 new15 基础上修正了睡眠数据的解析与展示：
+
+- **deep / rem 位置纠正**：原解析把深睡与 REM 的字节位置读反，导致两项数值错位。
+- **睡眠分段取“总和更大者”**：packetType 16 / 17 会收到多份候选 summary，改为比较 `清醒+浅睡+深睡+REM` 总和，取更完整的一份，避免读到残缺分段。
+- **新增“清醒”时长与次数**：提取 `awake` / `awakeCount`，界面显示为 `清醒:N分钟(N次)`。
+- **版本号与显示名规整**：由 `0.1.x` 回退链（sleepfix1~4 测试版）收敛为正式 `0.2.0`，显示名还原为“手表健康注入 / Watch Health Inject”。
 
 ### 关键教训
 
