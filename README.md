@@ -52,7 +52,7 @@
 
 ## 安装
 
-1. 到 [Releases](https://github.com/Sukuyo/watch-health-inject/releases) 下载最新版 `watch_health_inject_v0.2.0.toolpkg`
+1. 到 [Releases](https://github.com/Sukuyo/watch-health-inject/releases) 下载最新版 `watch_health_inject_v0.2.1.toolpkg`
 2. 在 Operit 中导入该包
 3. 在**工具箱设置**里配置 Gadgetbridge 导出的数据库路径（见下）
 4. 确保 Gadgetbridge 已连接手环、服务存活
